@@ -5,10 +5,8 @@ const authenticateToken = require("../middleware/authenticate-admin");
 
 const adminController = new AdminController();
 
-// Signin route
 router.post("/signin", adminController.signin);
 
-// Protected route
 router.get("/check", adminController.check);
 router.post("/getUser", authenticateToken, adminController.getUserByEmail);
 router.post(

@@ -9,7 +9,7 @@ export default function ForgotPasswordPage() {
   const handleResetPasswordClick = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Validate email
+    
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
       return;

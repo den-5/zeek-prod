@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const User = require("../models/User"); // Import the User model
+const User = require("../models/User"); 
 const createUserWallets = require("../tools/createUserWallets");
 const Wallet = require("../models/Wallet");
 const { notifyClients } = require("../tools/websocket-service");
@@ -9,35 +9,23 @@ const { v4: uuidv4 } = require("uuid");
 const nodemailer = require("nodemailer");
 const ResetPasswordCode = require("../models/ResetPasswordCode");
 
-// DISABLED FOR LOCAL DEVELOPMENT: Email functionality
-// Create a transporter using SMTP and environment credentials
-/*
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
-*/
-
 exports.changePassword = async (req, res) => {
   const { userId } = req.user;
   const { oldPassword, newPassword } = req.body;
 
   try {
-    // Find the user by ID
+    
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    // Compare the old password with the hashed password
+    
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
       return res.status(400).json({ error: "Invalid old password" });
     }
 
-    // Hash the new password
+    
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedNewPassword;
     user.save();
@@ -51,29 +39,28 @@ exports.changePassword = async (req, res) => {
   }
 };
 
-// Signup logic
 exports.signup = async (req, res) => {
   const { email, password, username } = req.body;
 
-  // Email validation regex
+  
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // Password validation regex (at least 6 characters, one letter, one number, allows special characters)
+  
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 
   try {
-    // Validate email
+    
     if (!emailRegex.test(email)) {
       return res.status(400).json({ message: "Invalid email format" });
     }
 
-    // Validate password
+    
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
         message:
           "Password must be at least 6 characters long and contain at least one letter and one number",
       });
     }
-    // Check if the user already exists
+    
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
@@ -81,51 +68,31 @@ exports.signup = async (req, res) => {
 
     const activationField = uuidv4();
 
-    // DISABLED FOR LOCAL DEVELOPMENT: Crypto wallet creation
-    // await createUserWallets(email);
+    
+    
 
-    // Hash the password
+    
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create a new user with $20 starting balance
+    
     const newUser = new User({
       email,
       password: hashedPassword,
       username,
       activationField,
-      balance: 20.0, // Starting balance for new users
+      balance: 20.0, 
     });
     await newUser.save();
 
-    // Generate a JWT token
+    
     const token = jwt.sign(
       { userId: newUser._id, email: newUser.email, username: newUser.username },
       process.env.JWT_SECRET,
       { expiresIn: "3d" }
     );
 
-    // DISABLED FOR LOCAL DEVELOPMENT: Email verification
-    /*
-    const sendVerificationEmail = async (email, activationField) => {
-      try {
-        // Compose the email message
-        const mailOptions = {
-          from: process.env.SMTP_USER,
-          to: email,
-          subject: "Email Verification",
-          text: `Click the following link to verify your email: ${process.env.FRONTEND_URL}/user/activation/${activationField}`,
-        };
-
-        // Send the email
-        await transporter.sendMail(mailOptions);
-      } catch (error) {
-        console.error("sendVerificationEmail error:", error.message);
-        throw new Error("Failed to send verification email");
-      }
-    };
-
-    await sendVerificationEmail(newUser.email, newUser.activationField);
-    */
+    
+    
 
     res.status(201).json({
       token,
@@ -137,24 +104,24 @@ exports.signup = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-// Signin logic
+
 exports.signin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Find the user by
+    
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Compare the password
+    
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    // Generate a JWT token
+    
     const token = jwt.sign(
       { userId: user._id, email: user.email, username: user.username },
       process.env.JWT_SECRET,
@@ -167,7 +134,6 @@ exports.signin = async (req, res) => {
   }
 };
 
-// Check authentication middleware
 exports.checkAuth = async (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
 
@@ -176,19 +142,19 @@ exports.checkAuth = async (req, res, next) => {
   }
 
   try {
-    // Verify the token
+    
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Check if the user exists in the database
+    
     const user = await User.findById(decodedToken.userId);
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
 
-    // Attach the user to the request object
+    
     req.user = user;
 
-    // Generate a new token
+    
     const newToken = jwt.sign(
       {
         userId: decodedToken.userId,
@@ -199,7 +165,7 @@ exports.checkAuth = async (req, res, next) => {
       { expiresIn: "3d" }
     );
 
-    // Return the email and new token
+    
     res.json({
       email: user.email,
       username: user.username,
@@ -215,7 +181,7 @@ exports.getUserWallet = async (req, res) => {
   const currency = req.body.currency;
 
   try {
-    // Find the user's wallet
+    
     const wallet = await Wallet.findOne({ email: user.email });
     if (!wallet) {
       return res.status(404).json({ message: "Wallet not found" });
@@ -233,14 +199,14 @@ exports.getUserTransaction = async (req, res) => {
     const { amount_crypto, currency, order_id, token } = req.body;
     const amount_usd = req.body.invoice_info.amount_usd;
 
-    // const decodedToken = jwt.decode(
-    //   token,
-    //   process.env.SECRET_KEY_CRYPTO,
-    //   (algorithm = "HS256")
-    // );
-    // if (!decodedToken) {
-    //   return res.status(401).json({ message: "Unauthorized" });
-    // }
+    
+    
+    
+    
+    
+    
+    
+    
 
     const address = req.body.invoice_info.address;
     const wallet = await Wallet.findOne({
@@ -262,10 +228,10 @@ exports.getUserTransaction = async (req, res) => {
       currency,
     });
 
-    // Save the transaction
+    
     await transaction.save();
 
-    // Update the user's transaction history
+    
     await User.findByIdAndUpdate(user._id, {
       $push: { transactions: transaction._id },
     });
@@ -291,7 +257,7 @@ exports.withdrawal = async (req, res) => {
     const { userId } = req.user;
     const { amount_usd, wallet_address, currency } = req.body;
 
-    // Find the user by ID
+    
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -303,7 +269,7 @@ exports.withdrawal = async (req, res) => {
       return res.status(400).json({ error: "Insufficient balance" });
     }
 
-    // Create a new transaction
+    
     const transaction = new Transaction({
       user: user._id,
       type: "withdrawal",
@@ -312,26 +278,26 @@ exports.withdrawal = async (req, res) => {
       amount_usd,
     });
 
-    // Save the transaction
+    
     await transaction.save();
 
-    // Update the user's transaction history
+    
     await User.findByIdAndUpdate(user._id, {
       $push: { transactions: transaction._id },
     });
 
-    // Update the user's balance
+    
     const newBalance = user.balance - amount_usd;
     user.balance = newBalance;
     await user.save();
 
-    // Notify clients about the new balance and withdrawal details
+    
     notifyClients({
       newBalance,
       amount_usd: -amount_usd,
     });
 
-    // Respond with the new balance and withdrawal details
+    
     res.json({
       newBalance,
       amount_usd: -amount_usd,
@@ -347,7 +313,7 @@ exports.withdrawal = async (req, res) => {
 exports.getUserTransactions = async (req, res) => {
   const { userId } = req.user;
   try {
-    // Find the user's transactions
+    
     const transactions = await Transaction.find({ user: userId });
     res.json(transactions);
   } catch (error) {
@@ -367,7 +333,7 @@ exports.verifyEmail = async (req, res) => {
     user.isActivated = true;
     await user.save();
 
-    // Send the verification email
+    
 
     res.json({ message: "Email verified successfully" });
   } catch (error) {
@@ -389,21 +355,8 @@ exports.sendForgotPasswordEmail = async (req, res) => {
     });
     await resetPasswordCode.save();
 
-    // DISABLED FOR LOCAL DEVELOPMENT: Password reset email
-    /*
-    const sendResetPasswordEmail = async (email, code) => {
-      const mailOptions = {
-        from: process.env.SMTP_USER,
-        to: email,
-        subject: "Reset Password",
-        text: `Here is your reset password link: ${process.env.FRONTEND_URL}/auth/forgot-password/${code}`,
-      };
-
-      await transporter.sendMail(mailOptions);
-    };
-
-    await sendResetPasswordEmail(user.email, resetPasswordCode.code);
-    */
+    
+    
 
     res.json({ message: "Reset password email sent successfully (email disabled in dev mode)" });
   } catch (error) {

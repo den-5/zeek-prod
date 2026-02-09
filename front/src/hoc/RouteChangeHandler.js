@@ -15,17 +15,17 @@ export default function RouteChangeHandler() {
   const [balanceUpdated, setBalanceUpdated] = useState(false);
 
   useEffect(() => {
-    // List of public paths that don't need auth checks
+    
     const publicPaths = ["/", "/auth/login", "/auth/signup", "/auth/forgot-password"];
-    // If we are on a public path (exact match or similar logic), we can still check auth
-    // but we shouldn't error out if no token.
+    
+    
 
     const checkAuth = async () => {
       const token = localStorage.getItem("token"); 
 
-      // If no token and trying to access protected route (games/user), redirect to home
+      
       if (!token) {
-        // Allow admin routes without standard user token
+        
         if (pathname.includes("/user/admin")) return;
 
         if (pathname.includes("/games") || pathname.includes("/user")) {
@@ -54,16 +54,16 @@ export default function RouteChangeHandler() {
           dispatch(setBalance(balance));
           setBalanceUpdated(true);
         } else {
-           // Token invalid, only remove and redirect if on protected route
+           
            localStorage.removeItem("token"); 
            if (pathname.includes("/games") || pathname.includes("/user")) {
                router.push("/");
            }
         }
       } catch (error) {
-         // Network error or other issue
-         // Don't force logout immediately unless critical? 
-         // For now, safe default:
+         
+         
+         
          console.error("Auth check failed", error);
       }
     };

@@ -1,7 +1,7 @@
 const Wallet = require("../models/Wallet");
 
 const createUserWallets = async (userEmail) => {
-  const fetch = (await import("node-fetch")).default; // Dynamic import for node-fetch
+  const fetch = (await import("node-fetch")).default; 
 
   const url = "https://api.cryptocloud.plus/v2/invoice/static/create";
   const headers = {
@@ -42,7 +42,7 @@ const createUserWallets = async (userEmail) => {
 
       if (response.ok) {
         const data = await response.json();
-        // Store the wallet address in the walletData object
+        
         const addressField = `${currency
           .toLowerCase()
           .replace(/_/g, "")}_address`;
@@ -53,15 +53,15 @@ const createUserWallets = async (userEmail) => {
         );
       }
     } catch (error) {
-      console.log(`Fail for ${currency}:`, error);
+      void(0);
     }
   }
 
-  // Create and save the Wallet instance
+  
   try {
     const wallet = new Wallet(walletData);
     await wallet.save();
-    console.log("Wallet saved successfully:", wallet);
+    void(0);
   } catch (error) {
     console.error("Error saving wallet:", error);
   }

@@ -7,43 +7,43 @@ import { setBalance } from "../../../redux/slices/userSlice";
 const Page = () => {
   const dispatch = useDispatch();
   
-  // Game State
-  const [number, setNumber] = useState(50.00); // Result number
+  
+  const [number, setNumber] = useState(50.00); 
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(null); 
   
-  // Inputs
+  
   const [pointsInvested, setPointsInvested] = useState(1);
   const [multiplier, setMultiplier] = useState(2.00);
-  const [successChance, setSuccessChance] = useState(48.00); // Default for 2x roughly
-  const [variant, setVariant] = useState("over"); // "over" or "under"
-  const [rollOver, setRollOver] = useState(52.00); // For UI slider
+  const [successChance, setSuccessChance] = useState(48.00); 
+  const [variant, setVariant] = useState("over"); 
+  const [rollOver, setRollOver] = useState(52.00); 
   
   const [error, setError] = useState(null);
   
-  // Stats for session
+  
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    // Initial sync of values if needed
+    
     updateValuesFromChance(48.00);
   }, []);
 
-  // Calculation Logic 
-  // Edge = 4% (96 RTP) based on original code "96 / value"
+  
+  
   
   const updateValuesFromChance = (chance) => {
     let val = parseFloat(chance);
     if (isNaN(val) || val < 0.01 || val > 98) return; 
     
-    // Calculate Multiplier: 96 / chance
+    
     const newMult = 96 / val;
     setMultiplier(newMult.toFixed(4));
     
-    // Calculate Roll Target
-    // If Over: Win if result > (100 - chance)
-    // If Under: Win if result < chance
+    
+    
+    
     if (variant === "over") {
         setRollOver((100 - val).toFixed(2));
     } else {
@@ -60,7 +60,7 @@ const Page = () => {
   const handleMultiplierChange = (e) => {
     const val = e.target.value;
     setMultiplier(val);
-    // Chance = 96 / Multiplier
+    
     if (val > 0) {
         const newChance = 96 / val;
         setSuccessChance(newChance.toFixed(2));
@@ -75,7 +75,7 @@ const Page = () => {
   const handleVariantToggle = () => {
       const newVariant = variant === "over" ? "under" : "over";
       setVariant(newVariant);
-      // Re-calculate roll target based on kept chance
+      
       if (newVariant === "over") {
           setRollOver((100 - successChance).toFixed(2));
       } else {
@@ -121,7 +121,7 @@ const Page = () => {
         setIsGameStarted(true);
         dispatch(setBalance(data.newBalance));
         
-        // Add to history
+        
         setHistory(prev => [{ result: data.randomNumber, won: data.isSuccess }, ...prev].slice(0, 10));
       }
     } catch (e) {
@@ -135,14 +135,14 @@ const Page = () => {
     <div className="min-h-screen pt-24 pb-12 px-4 md:px-8 bg-slate-900 font-sans text-white">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* Controls Sidebar */}
+        {}
         <div className="lg:col-span-4 space-y-6">
              <div className="glass-panel p-6 rounded-2xl border border-white/10">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                     <span>🎲</span> Dice Roll
                 </h2>
 
-                {/* Points Input */}
+                {}
                 <div className="mb-6">
                     <label className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 block">
                         Bet Amount (PTS)
@@ -208,11 +208,11 @@ const Page = () => {
              </div>
         </div>
 
-        {/* Game Area */}
+        {}
         <div className="lg:col-span-8">
             <div className="glass-panel p-8 rounded-2xl border border-white/10 h-full min-h-[400px] flex flex-col justify-center relative overflow-hidden">
                 
-                {/* Result Display */}
+                {}
                 <div className="absolute top-8 left-0 w-full text-center">
                     <div className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-2">History</div>
                     <div className="flex justify-center gap-2">
@@ -227,13 +227,13 @@ const Page = () => {
                     </div>
                 </div>
 
-                {/* Main Slider Visualization */}
+                {}
                 <div className="w-full px-4 md:px-12 py-12">
                      <div className="relative h-24 bg-slate-900/50 rounded-2xl border border-white/5 flex items-center px-4 overflow-hidden">
                         
-                        {/* Progress Bar Background */}
+                        {}
                         <div className="absolute inset-0 w-full h-full">
-                            {/* If Over: Red left, Green right. If Under: Green left, Red right */}
+                            {}
                             {variant === "over" ? (
                                 <div className="w-full h-full flex">
                                     <div className="h-full bg-red-500/10 border-r border-red-500/30 transition-all duration-300" style={{ width: `${rollOver}%` }} />
@@ -247,7 +247,7 @@ const Page = () => {
                             )}
                         </div>
 
-                        {/* Slider Tick (Target) */}
+                        {}
                         <div 
                             className="absolute top-0 bottom-0 w-1 bg-white z-10 shadow-[0_0_10px_rgba(255,255,255,0.5)] transition-all duration-300"
                             style={{ left: `${rollOver}%` }}
@@ -257,7 +257,7 @@ const Page = () => {
                             </div>
                         </div>
 
-                        {/* Result Marker (The Dice) */}
+                        {}
                         <div 
                            className="absolute top-1/2 -translate-y-1/2 w-16 h-16 z-20 transition-all duration-700 ease-out flex items-center justify-center"
                            style={{ left: `calc(${number}% - 32px)` }}
@@ -273,7 +273,7 @@ const Page = () => {
                         </div>
                      </div>
 
-                     {/* Scale Labels */}
+                     {}
                      <div className="flex justify-between mt-4 text-xs font-bold text-slate-500 px-1">
                          <span>0</span>
                          <span>25</span>
@@ -283,7 +283,7 @@ const Page = () => {
                      </div>
                 </div>
                 
-                {/* Result Message */}
+                {}
                 <div className="absolute bottom-8 w-full text-center h-8">
                     {isGameStarted && (
                         <div className={`text-2xl font-black animate-in slide-in-from-bottom-2 fade-in ${isSuccess ? 'text-emerald-400' : 'text-slate-500'}`}>

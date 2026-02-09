@@ -92,12 +92,11 @@ const UserPage = () => {
     }
   };
 
-
   return (
     <div className="min-h-screen pt-24 pb-12 px-4 md:px-8 bg-slate-900 font-sans text-white">
         <div className="max-w-4xl mx-auto space-y-8">
             
-            {/* Header / Profile Card */}
+            {}
             <div className="glass-panel p-8 rounded-2xl border border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="flex items-center gap-6">
                     <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-3xl font-bold shadow-lg shadow-indigo-500/20">
@@ -121,7 +120,7 @@ const UserPage = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 
-                {/* Settings Panel */}
+                {}
                 <div className="md:col-span-1 space-y-8">
                     <div className="glass-panel p-6 rounded-2xl border border-white/10">
                         <button 
@@ -179,7 +178,7 @@ const UserPage = () => {
                     </div>
                 </div>
 
-                {/* Main Content Area (History) */}
+                {}
                 <div className="md:col-span-2">
                      <div className="glass-panel p-6 rounded-2xl border border-white/10 min-h-[400px]">
                         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">

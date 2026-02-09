@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { QRCodeSVG } from "qrcode.react"; // Correct import statement
+import { QRCodeSVG } from "qrcode.react"; 
 import currencyIcons from "../user/payments/currencyIcons";
 
 export default function QRCodeGenerator({ value, currency }) {

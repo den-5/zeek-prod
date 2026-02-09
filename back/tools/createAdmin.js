@@ -15,17 +15,17 @@ const createAdmin = async () => {
 
     try {
         await mongoose.connect(process.env.DB_URL);
-        console.log('Connected to Database');
+        void(0);
 
-        // Check if admin exists
+        
         const existingAdmin = await Admin.findOne({ email });
         if (existingAdmin) {
-            console.log(`Admin user ${email} already exists.`);
-            // Update password just in case
+            void(0);
+            
             const hashedPassword = await bcrypt.hash(password, 10);
             existingAdmin.password = hashedPassword;
             await existingAdmin.save();
-            console.log(`Password reset for ${email} to '${password}'`);
+            void(0);
         } else {
             const hashedPassword = await bcrypt.hash(password, 10);
             const admin = new Admin({
@@ -33,16 +33,16 @@ const createAdmin = async () => {
                 password: hashedPassword
             });
             await admin.save();
-            console.log(`Admin created successfully.`);
-            console.log(`Email: ${email}`);
-            console.log(`Password: ${password}`);
+            void(0);
+            void(0);
+            void(0);
         }
 
     } catch (err) {
         console.error("Error creation admin:", err);
     } finally {
         await mongoose.disconnect();
-        console.log('Done');
+        void(0);
         process.exit(0);
     }
 };

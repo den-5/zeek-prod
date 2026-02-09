@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   email: "",
   isLoggedIn: false,
-  balance: 0, // Add balance to the initial state
+  balance: 0, 
 };
 
 const userSlice = createSlice({

@@ -5,7 +5,7 @@ import Link from 'next/link';
 function Page() {
     return (
         <div className="flex flex-col items-center justify-center min-h-[80vh] text-center">
-            {/* Hero Section */}
+            {}
             <div className="max-w-4xl mx-auto space-y-8 animate-fade-in-up">
                 <div className="inline-block px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 font-medium text-sm mb-4">
                     Next Generation Gaming
@@ -34,7 +34,7 @@ function Page() {
                 </div>
             </div>
 
-            {/* Features Grid */}
+            {}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 w-full max-w-6xl text-left">
                 <div className="glass-panel p-8 rounded-2xl hover:border-indigo-500/30 transition-colors group">
                     <div className="w-12 h-12 bg-indigo-500/10 rounded-lg flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform text-indigo-400">
@@ -67,7 +67,7 @@ function Page() {
                 </div>
             </div>
             
-            {/* Stats Section */}
+            {}
             <div className="mt-32 w-full border-t border-white/5 pt-16">
                  <div className="flex flex-wrap justify-center gap-16 md:gap-32">
                     <div>

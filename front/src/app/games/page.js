@@ -11,7 +11,7 @@ const GamesPage = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Welcome Banner */}
+      {}
       <div className="rounded-3xl bg-gradient-to-r from-indigo-900 to-purple-900 p-8 mb-12 relative overflow-hidden shadow-2xl border border-white/10">
         <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between">
@@ -31,7 +31,7 @@ const GamesPage = () => {
                     </button>
                 </div>
             </div>
-            {/* Decorative Element */}
+            {}
             <div className="hidden md:block text-9xl">🎁</div>
         </div>
       </div>
@@ -39,7 +39,7 @@ const GamesPage = () => {
       <h1 className="text-3xl font-bold mb-8 pl-4 border-l-4 border-indigo-500">Popular Games</h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {/* Dice Card */}
+        {}
         <Link href="/games/dice" className="group">
           <div className="relative h-64 rounded-2xl overflow-hidden glass-panel hover:border-indigo-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20">
             <Image
@@ -59,7 +59,7 @@ const GamesPage = () => {
           </div>
         </Link>
 
-        {/* Limbo Card */}
+        {}
         <Link href="/games/limbo" className="group">
           <div className="relative h-64 rounded-2xl overflow-hidden glass-panel hover:border-purple-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-purple-500/20">
             <Image
@@ -81,7 +81,7 @@ const GamesPage = () => {
           </div>
         </Link>
 
-        {/* Mines Card */}
+        {}
         <Link href="/games/mines" className="group">
            <div className="relative h-64 rounded-2xl overflow-hidden glass-panel hover:border-emerald-500/50 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-500/20">
             <Image

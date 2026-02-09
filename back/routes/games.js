@@ -6,14 +6,12 @@ const MinesController = require("../controllers/games/mines-controller");
 
 const router = express.Router();
 
-// Instantiate the DiceController
 const diceController = new DiceController();
 const limboController = new LimboController();
 const minesController = new MinesController();
 
-// Define the route to get a random number
 router.post("/random-number", authenticateToken, (req, res) => {
-  // Token is valid, proceed with the request
+  
   diceController.getRandomNumber(req, res);
 });
 

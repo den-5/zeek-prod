@@ -8,25 +8,25 @@ import CountUp from "react-countup";
 const Page = () => {
   const dispatch = useDispatch();
 
-  // Game State
+  
   const [resultMultiplier, setResultMultiplier] = useState(1.00); 
-  // We initialize at 1.00 so CountUp starts there or stays there.
+  
   
   const [loading, setLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(null); // null = not played yet, true/false
+  const [isSuccess, setIsSuccess] = useState(null); 
   
-  // Inputs
+  
   const [pointsInvested, setPointsInvested] = useState(1);
   const [targetMultiplier, setTargetMultiplier] = useState(2.00);
   const [successChance, setSuccessChance] = useState(48.00);
 
   const [error, setError] = useState(null);
 
-  // Stats
+  
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
-     // Init default sync
+     
      updateValuesFromMultiplier(2.00);
   }, []);
 
@@ -34,7 +34,7 @@ const Page = () => {
     let val = parseFloat(mult);
     if (isNaN(val)) return;
     
-    // safe guard
+    
     let chance = 96 / val;
     if (chance > 99) chance = 99;
     if (chance < 0.01) chance = 0.01;
@@ -51,7 +51,7 @@ const Page = () => {
   const handleChanceChange = (e) => {
       const val = e.target.value;
       setSuccessChance(val);
-      // Inverse
+      
       let mult = 96 / parseFloat(val);
       if (isFinite(mult)) {
          setTargetMultiplier(mult.toFixed(2));
@@ -91,12 +91,12 @@ const Page = () => {
       if (response.status !== 200) {
         setError(data.message || data.error || "Game failed");
       } else {
-        setIsSuccess(data.isSuccess); // Did we win?
-        setResultMultiplier(data.multiplier); // What was the crash point?
+        setIsSuccess(data.isSuccess); 
+        setResultMultiplier(data.multiplier); 
         
         dispatch(setBalance(data.newBalance));
         
-        // Add to history
+        
         setHistory(prev => [{ result: data.multiplier, target: targetMultiplier, won: data.isSuccess }, ...prev].slice(0, 10));
       }
     } catch (e) {
@@ -110,14 +110,14 @@ const Page = () => {
     <div className="min-h-screen pt-24 pb-12 px-4 md:px-8 bg-slate-900 font-sans text-white">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* Controls Sidebar */}
+        {}
         <div className="lg:col-span-4 space-y-6">
              <div className="glass-panel p-6 rounded-2xl border border-white/10">
                 <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
                     <span>🚀</span> Limbo
                 </h2>
 
-                {/* Points Input */}
+                {}
                 <div className="mb-6">
                     <label className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 block">
                         Bet Amount (PTS)
@@ -176,11 +176,11 @@ const Page = () => {
              </div>
         </div>
 
-        {/* Game Area */}
+        {}
         <div className="lg:col-span-8">
             <div className="glass-panel p-8 rounded-2xl border border-white/10 h-full min-h-[400px] flex flex-col relative overflow-hidden">
                 
-                {/* Visual History */}
+                {}
                 <div className="w-full flex justify-end gap-2 mb-8 h-8">
                      {history.map((h, i) => (
                             <div 
@@ -193,7 +193,7 @@ const Page = () => {
                     ))}
                 </div>
 
-                {/* Main Limbo Display */}
+                {}
                 <div className="flex-1 flex flex-col items-center justify-center">
                     <div className="relative">
                         <div className={`text-9xl font-black font-mono tracking-tighter transition-colors duration-300
@@ -203,7 +203,7 @@ const Page = () => {
                                 start={0}
                                 end={resultMultiplier}
                                 decimals={2}
-                                duration={0.8} // Faster animation for snappy feel
+                                duration={0.8} 
                                 separator=","
                                 suffix="x"
                                 preserveValue={true} 
@@ -211,7 +211,7 @@ const Page = () => {
                         </div>
                     </div>
 
-                     {/* Result Message */}
+                     {}
                      <div className="h-12 mt-8">
                         {isSuccess !== null && (
                             <div className={`text-xl font-bold uppercase tracking-widest animate-in fade-in zoom-in duration-300 ${isSuccess ? 'text-emerald-500' : 'text-red-500'}`}>

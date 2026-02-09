@@ -1,6 +1,6 @@
 const { Random } = require("random-js");
 const jwt = require("jsonwebtoken");
-const random = new Random(); // Create a Random instance
+const random = new Random(); 
 const User = require("../../models/User");
 
 class DiceController {

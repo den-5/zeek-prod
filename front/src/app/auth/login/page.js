@@ -14,10 +14,10 @@ const LoginPage = () => {
   const router = useRouter();
 
   const handleLogin = async () => {
-    // Email validation regex
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Validate email
+    
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
       return;

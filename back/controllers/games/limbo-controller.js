@@ -1,7 +1,7 @@
 const { Random } = require("random-js");
 const jwt = require("jsonwebtoken");
-const User = require("../../models/User"); // Adjust the path as necessary
-const random = new Random(); // Create a Random instance
+const User = require("../../models/User"); 
+const random = new Random(); 
 
 class LimboController {
   async getLimboMultiplier(req, res) {
@@ -31,7 +31,7 @@ class LimboController {
           .json({ error: "Insufficient funds", invalidEntry: true });
       }
 
-      const entry = req.body.entry; // Assuming entry is sent in the request body
+      const entry = req.body.entry; 
       if (isSuccess) {
         user.balance += entry * req.body.target - entry;
       } else {

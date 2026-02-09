@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// Define the Wallet schema
 const walletSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   usdttrc20_address: { type: String, required: false },
@@ -14,7 +13,6 @@ const walletSchema = new mongoose.Schema({
   eth_address: { type: String, required: false },
 });
 
-// Create the Wallet model
 const Wallet = mongoose.model("Wallet", walletSchema);
 
 module.exports = Wallet;

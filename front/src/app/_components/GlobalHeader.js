@@ -40,7 +40,7 @@ const GlobalHeader = ({ children }) => {
   };
 
   useEffect(() => {
-    // const ws = new WebSocket("https://zeek-vo3j.onrender.com/ws");
+    
     const ws = new WebSocket("ws://localhost:4000");
 
     ws.onmessage = async (event) => {
@@ -77,7 +77,7 @@ const GlobalHeader = ({ children }) => {
       <header className="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-white/5 backdrop-blur-md bg-slate-900/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* Logo Section */}
+            {}
             <div className="flex-shrink-0 flex items-center">
               <Link href={IsUserLoggedIn ? "/games" : "/"} className="group flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30">
@@ -89,7 +89,7 @@ const GlobalHeader = ({ children }) => {
               </Link>
             </div>
 
-            {/* Right Section */}
+            {}
             <div className="flex items-center space-x-6">
               {IsUserLoggedIn ? (
                 <>
@@ -99,7 +99,7 @@ const GlobalHeader = ({ children }) => {
                   </div>
 
                   <div className="flex items-center space-x-3">
-                    {/* Wallet/Payments Removed as requested */}
+                    {}
                     
                     <Link href="/user" className="flex items-center gap-3 pl-2 py-1 pr-1 hover:bg-white/5 rounded-full transition-all border border-transparent hover:border-white/5">
                       <div className="hidden md:block text-right">

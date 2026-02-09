@@ -7,7 +7,7 @@ import {
   setEmail,
   setIsLoggedIn,
   setUsername,
-} from "../../../redux/slices/userSlice"; // Adjust the path to your actions file
+} from "../../../redux/slices/userSlice"; 
 
 const SignupPage = () => {
   const [email, setEmailState] = useState("");
@@ -19,12 +19,12 @@ const SignupPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = async () => {
-    // Email validation regex
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // Password validation regex (at least 6 characters, one letter, one number, allows special characters)
+    
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 
-    // Validate email
+    
     if (!emailRegex.test(email)) {
       setError("Invalid email format");
       return;
@@ -32,7 +32,7 @@ const SignupPage = () => {
       setError(null);
     }
 
-    // Validate password
+    
     if (!passwordRegex.test(password)) {
       setError(
         "Password must be at least 6 characters long and contain at least one letter and one number"

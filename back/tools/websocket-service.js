@@ -6,20 +6,19 @@ const initializeWebSocket = (server) => {
   wss = new WebSocket.Server({ server });
 
   wss.on("connection", (ws) => {
-    console.log("Client connected");
+    void(0);
 
     ws.on("message", (message) => {
-      console.log(`Received message => ${message}`);
-      // Handle incoming messages from clients
+      void(0);
+      
     });
 
     ws.on("close", () => {
-      console.log("Client disconnected");
+      void(0);
     });
   });
 };
 
-// Function to broadcast messages to all connected clients
 const notifyClients = (data) => {
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {

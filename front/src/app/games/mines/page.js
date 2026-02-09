@@ -8,26 +8,26 @@ import MineAsset from "./_assets/Mine.js";
 import BombeAsset from "./_assets/Bombe.js";
 
 const Page = () => {
-    // Game State
+    
     const [isGameStarted, setIsGameStarted] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [isWon, setIsWon] = useState(false);
     
-    // Game Data
+    
     const [minesCount, setMinesCount] = useState(3);
     const [pointsInvested, setPointsInvested] = useState(1);
-    const [positions, setPositions] = useState([]); // Revealed tiles
-    const [bombsPositions, setBombsPositions] = useState([]); // All bomb locations (on end)
+    const [positions, setPositions] = useState([]); 
+    const [bombsPositions, setBombsPositions] = useState([]); 
     const [multiplier, setMultiplier] = useState(1.00);
     
-    // UI State
+    
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     
     const dispatch = useDispatch();
   
     useEffect(() => {
-      // Restore game state if user refreshes
+      
       const checkUserInGame = async () => {
         try {
           const token = localStorage.getItem("token");
@@ -45,14 +45,14 @@ const Page = () => {
           
           if (response.ok) {
             const data = await response.json();
-             // Check if game is actually in progress
+             
             if (data.isPlaying) {
                setIsGameStarted(true);
                setIsPlaying(true);
                setMultiplier(data.multiplier ? data.multiplier.toFixed(2) : 1.00);
                setPositions(data.positions || []);
-               // Just keep default minesCount/points if backend doesn't send them back in this specific endpoint
-               // or set if available
+               
+               
             }
           }
         } catch (error) {
@@ -132,7 +132,7 @@ const Page = () => {
         setMultiplier(data.multiplier ? data.multiplier.toFixed(2) : multiplier);
         
         if (!data.isPlaying) {
-          // Game Over (Lost)
+          
           setIsPlaying(false);
           setBombsPositions(data.bombsPositions || []); 
         } 
@@ -178,7 +178,7 @@ const Page = () => {
       <div className="min-h-screen pt-24 pb-12 px-4 md:px-8 font-sans text-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
           
-          {/* Sidebar Controls */}
+          {}
           <div className="lg:col-span-4 space-y-6">
               <div className="glass-panel p-6 rounded-2xl border border-white/10 relative overflow-hidden">
                   <div className="relative z-10">
@@ -186,7 +186,7 @@ const Page = () => {
                           <span>💣</span> Mines Rush
                       </h2>
   
-                      {/* Points Input */}
+                      {}
                       <div className="mb-6">
                           <label className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 block">
                               Points to Play
@@ -203,7 +203,7 @@ const Page = () => {
                           </div>
                       </div>
   
-                      {/* Mines Count */}
+                      {}
                       <div className="mb-8">
                           <label className="text-slate-400 text-sm font-semibold uppercase tracking-wider mb-2 block">
                               Mines Density ({minesCount})
@@ -223,7 +223,7 @@ const Page = () => {
                           </div>
                       </div>
   
-                      {/* Action Button */}
+                      {}
                       {error && (
                           <div className="bg-red-500/20 text-red-200 text-sm p-3 rounded-lg mb-4 border border-red-500/30">
                               {error}
@@ -251,7 +251,7 @@ const Page = () => {
                   </div>
               </div>
   
-              {/* Stats Card */}
+              {}
               <div className="glass-panel p-6 rounded-2xl border border-white/10">
                   <div className="flex justify-between items-center">
                       <div>
@@ -270,11 +270,11 @@ const Page = () => {
               </div>
           </div>
   
-          {/* Game Grid */}
+          {}
           <div className="lg:col-span-8 flex justify-center items-center">
               <div className="relative glass-panel p-4 md:p-8 rounded-3xl border border-white/10 shadow-2xl bg-black/40">
                   
-                  {/* Game Over Overlay */}
+                  {}
                   {!isPlaying && isGameStarted && (
                        <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm rounded-3xl animate-in fade-in duration-300">
                           <div className="text-center p-8 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl transform scale-110">
@@ -307,11 +307,11 @@ const Page = () => {
                               {[...Array(5)].map((_, colIndex) => {
                                   const key = `${rowIndex}-${colIndex}`;
                                   
-                                  // Determine state of this cell
+                                  
                                   const isRevealed = positions.some(p => p.x === rowIndex && p.y === colIndex);
                                   
-                                  // Formatting bomb positions from backend
-                                  // Backend might send array of objects {x,y} 
+                                  
+                                  
                                   let isBomb = false;
                                   if (!isPlaying && bombsPositions) {
                                       if (Array.isArray(bombsPositions)) {
@@ -321,7 +321,7 @@ const Page = () => {
 
                                   return (
                                     <div key={key} className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 relative bg-slate-800/20 rounded-xl">
-                                        {/* If Revealed & Not Bomb -> Show Gem/MineAsset */}
+                                        {}
                                         {isRevealed && (
                                             <div className="absolute inset-0 bg-indigo-500/20 rounded-xl flex items-center justify-center border border-indigo-500/50 shadow-inner shadow-indigo-500/20 animate-in zoom-in duration-200">
                                                 <div className="w-2/3 h-2/3">
@@ -330,7 +330,7 @@ const Page = () => {
                                             </div>
                                         )}
                                         
-                                        {/* If Game Ended & Is Bomb -> Show Bomb */}
+                                        {}
                                         {!isPlaying && isBomb && (
                                              <div className="absolute inset-0 bg-red-500/20 rounded-xl flex items-center justify-center border border-red-500/50 animate-in zoom-in duration-200">
                                                   <div className="w-2/3 h-2/3 opacity-80">
@@ -339,7 +339,7 @@ const Page = () => {
                                              </div>
                                         )}
 
-                                        {/* Cover Button */}
+                                        {}
                                         {!isRevealed && !( !isPlaying && isBomb ) && (
                                             <div className="absolute inset-0">
                                                 <MinesButton

@@ -1,5 +1,5 @@
-const User = require("../models/User"); // Adjust the path as necessary
-const Admin = require("../models/Admin"); // Adjust the path as necessary
+const User = require("../models/User"); 
+const Admin = require("../models/Admin"); 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -43,7 +43,7 @@ class AdminController {
       if (!user) {
         return res.status(404).json({ error: "User not found" });
       }
-      user.password = bcrypt.hashSync(req.body.password, 10); // Hash the password
+      user.password = bcrypt.hashSync(req.body.password, 10); 
       await user.save();
       res.json({ message: "Password changed successfully" });
     } catch (error) {
@@ -77,20 +77,20 @@ class AdminController {
     const { email, password } = req.body;
 
     try {
-      // Find the user by
+      
       const admin = await Admin.findOne({ email });
       if (!admin) {
         return res.status(400).json({ message: "Access denited" });
       }
 
-      // Compare the password
+      
       const isMatch = await bcrypt.compare(password, admin.password);
 
       if (!isMatch) {
         return res.status(400).json({ message: "Invalid credentials" });
       }
 
-      // Generate a JWT token
+      
       const token = jwt.sign(
         { userId: admin._id, email: admin.email },
         process.env.ADMIN_SECRET,
@@ -110,16 +110,16 @@ class AdminController {
     }
 
     try {
-      // Verify the token
+      
       const decodedToken = jwt.verify(token, process.env.ADMIN_SECRET);
 
-      // Check if the user exists in the database
+      
       const user = await Admin.findById(decodedToken.userId);
       if (!user) {
         return res.status(401).json({ message: "User not found" });
       }
 
-      // Generate a new token
+      
       const newToken = jwt.sign(
         {
           userId: user._id,
@@ -129,7 +129,7 @@ class AdminController {
         { expiresIn: "5m" }
       );
 
-      // Return the email and new token
+      
       res.json({
         email: user.email,
         token: newToken,
@@ -142,7 +142,7 @@ class AdminController {
     const { email, password } = req.body;
 
     try {
-      // Check if the user already exists
+      
       const candidate = await Admin.findOne({ email });
       if (candidate) {
         return res.status(400).json({ message: "User already exists" });

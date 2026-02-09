@@ -163,7 +163,7 @@ const Page = () => {
         }
       );
       if (response.ok) {
-        console.log("Admin created successfully");
+        void(0);
         setIsAdminCreating(false);
       }
     } catch (error) {

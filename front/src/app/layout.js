@@ -1,4 +1,4 @@
-// src/app/layout.js
+
 import Providers from "./_components/Providers";
 import RootLayout from "./_components/RootLayout";
 import "./globals.css";

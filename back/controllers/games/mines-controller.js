@@ -2,11 +2,11 @@ const { Random } = require("random-js");
 const jwt = require("jsonwebtoken");
 const MinesBoard = require("../../models/MinesBoard");
 const User = require("../../models/User");
-const random = new Random(); // Create a Random instance
+const random = new Random(); 
 
 class MinesController {
   async checkUserInGame(req, res) {
-    const userId = req.user.userId; // Assuming userId is stored in req.user
+    const userId = req.user.userId; 
 
     try {
       const game = await MinesBoard.findOne({ userId: userId });
@@ -97,8 +97,8 @@ class MinesController {
   }
 
   async updateMinesBoard(req, res) {
-    const userId = req.user.userId; // Assuming userId is stored in req.user
-    const target = req.body.target; // Assuming target is sent in the request body  { x: 0, y: 0 }
+    const userId = req.user.userId; 
+    const target = req.body.target; 
     const token = jwt.sign(req.user, process.env.JWT_SECRET);
 
     try {
@@ -108,7 +108,7 @@ class MinesController {
         return res.status(404).json({ error: "Game not found" });
       }
 
-      const { x, y } = target; // Assuming target contains x and y coordinates
+      const { x, y } = target; 
       if (game.minesBoard[x][y] === 1) {
         const positions = [];
         for (let i = 0; i < game.minesBoard.length; i++) {
@@ -132,7 +132,7 @@ class MinesController {
           return res.status(404).json({ error: "User not found" });
         }
 
-        await MinesBoard.deleteOne({ userId: userId }); // Delete the game when user loses
+        await MinesBoard.deleteOne({ userId: userId }); 
         return res.json({
           message: "User lost",
           multiplier: 0,
@@ -198,7 +198,7 @@ class MinesController {
     }
   }
   async collect(req, res) {
-    const userId = req.user.userId; // Assuming userId is stored in req.user
+    const userId = req.user.userId; 
 
     function countMultiplier(mines, openFields) {
       if (openFields < 1) return;
@@ -240,7 +240,7 @@ class MinesController {
         }
       }
 
-      const entry = game.entry; // Assuming entry is stored in the game object
+      const entry = game.entry; 
       const multiplier = countMultiplier(
         bombsPositions.length,
         positions.length
